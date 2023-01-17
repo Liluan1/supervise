@@ -18,11 +18,13 @@ if ($retval == 0) {
     $json['status'] = 'success';
     $key = file_get_contents($key_file);
     $json['key'] = base64_encode($key);
-    unlink($key_file);
 } else {
     $json['status'] = 'fail';
     $json['err'] = implode("\n", $output);
 }
 
 echo json_encode($json, JSON_UNESCAPED_UNICODE);
-unlink($key_file);
+
+if (file_exists($key_file)) {
+    unlink($key_file);
+}
